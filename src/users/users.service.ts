@@ -9,7 +9,7 @@ export class UsersService {
   constructor(@InjectModel('Users') private readonly userModel: Model<IUser>) {}
 
   async registerUser(user: User) {
-    const userExist = await this.userModel.find({ emailId: user.emailId });
+    const userExist = await this.userModel.findOne({ emailId: user.emailId });
     if (userExist) {
       return { statusCode: '201', mesg: 'User already Registered' };
     } else {
