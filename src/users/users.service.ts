@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { IUser } from './users.interface';
 import { Model } from 'mongoose';
-import { User } from './users.dto';
+import { UpdateUser, User } from './users.dto';
 
 @Injectable()
 export class UsersService {
@@ -48,6 +48,18 @@ export class UsersService {
       return userResponse;
     } else {
       return { statusCode: '201', mesg: 'User Not found' };
+    }
+  }
+
+  async updateUser(user: UpdateUser) {
+    let userExist = await this.userModel.findOne({ emailId: user.emailId });
+    if (userExist) {
+      userExist = Object.assign(userExist,user);
+      await userExist.save();
+      return { statusCode: '201', mesg: 'User details updated' };
+    } else {
+      await this.userModel(user).save();
+      return { statusCode: '201', mesg: 'Invalid Details' };
     }
   }
 }
