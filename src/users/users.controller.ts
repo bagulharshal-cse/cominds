@@ -15,6 +15,7 @@ export class UsersController {
       const mesg = await this.userService.registerUser(user);
       response.status(201).json(mesg);
     } catch (error) {
+      console.log(error);
       response.status(500).json({
         statuscode: 500,
         mesg: 'Intenal Server Error',

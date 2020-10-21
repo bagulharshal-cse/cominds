@@ -7,6 +7,7 @@ import { CoursesService } from './courses.service';
 @Module({
   imports: [MongooseModule.forFeature([{ name: 'Courses', schema: CourseSchema }])],
   controllers: [CoursesController],
-  providers: [CoursesService]
+  providers: [CoursesService],
+  exports:[CoursesService]
 })
 export class CoursesModule {}

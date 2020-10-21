@@ -6,12 +6,13 @@ import { Course } from './courses.dto';
 
 @Injectable()
 export class CoursesService {
+  constructor(
+    @InjectModel('Courses') private readonly courseModel: Model<ICourse>,
+  ) {}
 
-    constructor(@InjectModel('Courses') private readonly courseModel: Model<ICourse>) {}
-
-    async addCourses(course: Course[], userId: string) {
-          await this.courseModel(course).save();
-          return { statusCode: '201', mesg: 'Course Added' };
-      }
-
+  async addCourses(course: Course, userId: string) {
+    course.userId = userId;
+    await this.courseModel(course).save();
+    return { statusCode: '201', mesg: 'Course Added' };
+  }
 }

@@ -5,7 +5,7 @@ export class User {
   _id:string;
   @ApiProperty() emailId: string;
   @ApiProperty() password: string;
-  @ApiProperty({ type: [Course] }) courses: Course[];
+  @ApiProperty() course: Course;
 }
 
 export class UpdateUser extends PartialType(User){
