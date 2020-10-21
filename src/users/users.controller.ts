@@ -1,6 +1,6 @@
-import { Controller, Res, Body, Post } from '@nestjs/common';
+import { Controller, Res, Body, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { User } from './users.dto';
+import { UpdateUser, User } from './users.dto';
 import { Request, Response } from 'express';
 import { UsersService } from './users.service';
 
@@ -15,6 +15,7 @@ export class UsersController {
       const mesg = await this.userService.registerUser(user);
       response.status(201).json(mesg);
     } catch (error) {
+      console.log(error);
       response.status(500).json({
         statuscode: 500,
         mesg: 'Intenal Server Error',
@@ -26,6 +27,19 @@ export class UsersController {
   async signInUser(@Res() response: Response, @Body() user: User) {
     try {
       const mesg = await this.userService.signInUser(user);
+      response.status(200).json(mesg);
+    } catch (error) {
+      response.status(500).json({
+        statuscode: 500,
+        mesg: 'Intenal Server Error',
+      });
+    }
+  }
+
+  @Put('/')
+  async updateUser(@Res() response: Response, @Body() user: UpdateUser){
+    try {
+      const mesg = await this.userService.updateUser(user);
       response.status(200).json(mesg);
     } catch (error) {
       response.status(500).json({

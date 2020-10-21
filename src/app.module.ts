@@ -13,8 +13,8 @@ const configuration = new ConfigurationService(`${process.cwd()}/.env`);
     MongooseModule.forRoot(configuration.get('MONGO_URI'), {
       useFindAndModify: false,
     }),
-    UsersModule,
     CoursesModule,
+    UsersModule,
     ConfigurationModule,
   ],
   controllers: [AppController],
