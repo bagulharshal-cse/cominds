@@ -3,10 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { IUser } from './users.interface';
 import { Model } from 'mongoose';
 import { UpdateUser, User } from './users.dto';
+import { CoursesService } from '../courses/courses.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel('Users') private readonly userModel: Model<IUser>) {}
+  constructor(
+    @InjectModel('Users') private readonly userModel: Model<IUser>,
+    private courseService:CoursesService
+    ) {}
 
   async registerUser(user: User) {
     const userExist = await this.userModel.findOne({ emailId: user.emailId });
@@ -61,5 +65,9 @@ export class UsersService {
       await this.userModel(user).save();
       return { statusCode: '201', mesg: 'Invalid Details' };
     }
+  }
+
+  async addCourses(user: User){
+    await this.courseService.addCourses(user.courses,user._id);
   }
 }

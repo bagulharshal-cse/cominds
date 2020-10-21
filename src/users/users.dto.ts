@@ -1,8 +1,11 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { Course } from '../courses/courses.dto';
 
 export class User {
+  _id:string;
   @ApiProperty() emailId: string;
   @ApiProperty() password: string;
+  @ApiProperty({ type: [Course] }) courses: Course[];
 }
 
 export class UpdateUser extends PartialType(User){
