@@ -18,7 +18,9 @@ export class UsersService {
       return { statusCode: '201', mesg: 'User already Registered' };
     } else {
       const newUser = await this.userModel(user).save();
-      await this.courseService.addCourses(user.course, newUser._id);
+      if (user.course) {
+        this.courseService.addCourses(user.course, newUser._id);
+      }
       return { statusCode: '201', mesg: 'User Registered' };
     }
   }
