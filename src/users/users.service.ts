@@ -50,6 +50,7 @@ export class UsersService {
       const userResponse = {
         statusCode: '200',
         mesg: 'User Successfully Logged In',
+        details: userExist[0],
         emailId: userExist[0].emailId,
         token: '',
         courses: userExist[0].courses,
